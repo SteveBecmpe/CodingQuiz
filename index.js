@@ -5,12 +5,10 @@ let BeginningTime = 75;
 let timePen = 10;// time penalty 
 let score = 0; //default value for score. used to keep track of correct answers.
 let totAnsrD = 0;//keeps track of questions answered.
-// let quizAreaEL = document.querySelector("#quizarea");
 let timeLeftEL = document.querySelector("#time-left");
 let resetButtEL = document.querySelector("#topmidreset");
 let quizAreaEL = document.querySelector("#quiz-area-content");
-let testvarEL = document.querySelector("#topleft");
-let tempEraseRwEL = document.querySelector("#EraseRW");
+let HighScoreEL = document.querySelector("#High-Score");
 let curQuizPosition = 0;//keeps track of the current position of the array
 let button = document.createElement("button");
 let answerRwEL = document.querySelector("#quiz-rw-content");
@@ -18,10 +16,6 @@ let firsttime = 0;
 let AllTimeHighScores = [];
 let timeInterval;
 let timeLeft;
-
-
-
-// let RenderContentObjArray = [];
 
 let QuizContentObjArray = [
     {
@@ -124,41 +118,6 @@ let QuizContentObjArray = [
     },
 ]//END of QuizContentObjArray--------------------------------------------
 
-// function printQuizArrayContent() {
-//     //load render start content from 0 index of quiz content array
-//     //this will load the start button as well
-//     //calls the render next function with variables to render the first obj in quiz content obj array
-//     for (var i = 0; i < QuizContentObjArray.length; i++) {
-//         console.log(QuizContentObjArray[i]);
-//         console.log(QuizContentObjArray[i].name);
-//         button.addEventListener("click", function (event) {
-//             console.log(event.target.value);
-//         });
-//     };
-// }
-
-
-// function renderHighScores() {//--------------------------------not finished. Renders highscores.
-//     // Clear todoList element and update todoCountSpan
-//     quizAreaEL.innerHTML = "";/// clears quiz area content
-//     let HighScoreCount = AllTimeHighScores.length;
-
-//     // Render a new li for each todo
-//     for (var i = 0; i < todos.length; i++) {
-//         var todo = todos[i];
-
-//         var li = document.createElement("li");
-//         li.textContent = todo;
-//         li.setAttribute("data-index", i);
-
-//         var button = document.createElement("button");
-//         button.textContent = "Complete";
-
-//         li.appendChild(button);
-//         todoList.appendChild(li);
-//     }
-// }
-
 function init() {
     // Get stored todos from localStorage
     // Parsing the JSON string to an object
@@ -168,8 +127,8 @@ function init() {
     if (storedAllTimeHighScores !== null) {
         AllTimeHighScores = storedAllTimeHighScores;
     }
-    // Render todos to the DOM
-    renderHighScores();
+    // Render Scores to the DOM
+    renderHighScores();//-------------------------------------------------------------------------------------
 }
 
 function storeHighScores() {
@@ -177,6 +136,9 @@ function storeHighScores() {
     localStorage.setItem("AllTimeHighScores", JSON.stringify(AllTimeHighScores));
 }
 
+function renderTime() {
+    timeLeftEL.innerHTML = timeLeft;
+}
 
 //create and append Content
 function CAC(val, val2) {//val is the index in the quizcontentobject array to be rendered.
@@ -184,7 +146,6 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
     console.log(QuizContentObjArray[val].name.substring(0, 1));
 
     quizAreaEL.innerHTML = "";
-
 
     if ((QuizContentObjArray[val].name.substring(0, 1)) == "S") {
         // render Start quiz section
@@ -244,13 +205,8 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
 
         temp = document.createElement("div");//create line
         temp.setAttribute("id", "RWLine");
-
         LastDynamicQuizElement.append(temp);
 
-        //append line and answer---------------
-        //let LastDynamicQuizElement = document.querySelector("#quiz-area-content");//was#LastDyQEL"
-        // console.log(val+"is button target sent to RCW");
-        //let temp = document.createElement("hr");//create line
         //LastDynamicQuizElement.append(temp);
         let RWLine = document.querySelector("#RWLine");
         temp = document.createElement("a");
@@ -271,18 +227,14 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
         } else if (QuizContentObjArray[val - 1].answer != val2) {
             clearInterval(timer);
             timeLeft = timeLeft - timePen;
-            renderTime();
+            StartTimer();
+            console.log("RENDER TIME AFTER WRONG");
             temptext = "Wrong";
             totAnsrD++;
             setTimeout(ClearAnswerContent, 1000);//SET TIME OUT- for answer stuff
 
         }
         temp.textContent = temptext;
-
-        //setTimeout(ClearAnswerContent, 1200);//SET TIME OUT- for answer stuff
-
-        //needs to be ID RWLine.appendChild(temp);
-
     } else if ((QuizContentObjArray[val].name.substring(0, 2)) == "F6") { // if all done
         console.log("Inside F else If in CAC --------------------------------------------------");
 
@@ -297,7 +249,6 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
         tempBodyContent = document.createElement("h5");
         tempBodyContent.textContent = "Correct Answers / Total Questions: " + score + "/" + totAnsrD;
         quizAreaEL.appendChild(tempBodyContent);
-
 
         tempBodyContent = document.createElement("form");
         tempBodyContent.setAttribute("id", "UserInt");
@@ -318,11 +269,6 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
         tempBodyContent.setAttribute("id", "User-Initials");
         UserForm.appendChild(tempBodyContent);
 
-
-        // tempBodyContent.textContent = QuizContentObjArray[val].formC;
-        // tempBodyContent.setAttribute("class", "center-test");
-
-
         let button1 = document.createElement("button");
         button1.setAttribute("value", QuizContentObjArray[val].buttVal);//was val+1
         button1.setAttribute("class", "button4");
@@ -330,12 +276,9 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
         UserForm.append(button1);//was append child
 
     } else if ((QuizContentObjArray[val].name.substring(0, 2)) == "F7") {
-
         let tempheader = document.createElement("h2"); //create header for content to be loaded from quizcontentobjarray
         tempheader.textContent = QuizContentObjArray[val].headerC;
         quizAreaEL.appendChild(tempheader);
-        //--------------------------------not finished. Renders highscores.
-        // Clear todoList element and update todoCountSpan
         //quizAreaEL.innerHTML = "";/// clears quiz area content
         let HighScoreCount = AllTimeHighScores.length;
         let HStempST = document.querySelector("#quiz-area-content");
@@ -354,70 +297,19 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
             HStempST.appendChild(li);
         }
     }
-
-
-
-
-
-
-    //RRWA(val, val2);
-
     console.log("End CAC");
 }
 
-function ClearAnswerContent(){
-let LastDynamicQuizElement = document.querySelector("#RWLine");//was#LastDyQEL"
-LastDynamicQuizElement.innerHTML = "";
+HighScoreEL.addEventListener("click", function (event) {//-----------------------------------------------------
+    let val = event.target;
+    CAC(7, val);
+})
+
+
+function ClearAnswerContent() {
+    let LastDynamicQuizElement = document.querySelector("#RWLine");//was#LastDyQEL"
+    LastDynamicQuizElement.innerHTML = "";
 }
-
-tempEraseRwEL.addEventListener("click", function (event) {
-    event.preventDefault();
-    let buttClickD = event.target;//get specific button that caused the click
-    if (buttClickD.matches("button") === true) {//wont need this check later
-        //remove correct wrong.
-        //let LastDynamicQuizElement = document.querySelector("#RWLine");//was#LastDyQEL"
-        //LastDynamicQuizElement.innerHTML = "";
-        ClearAnswerContent();
-    }
-
-
-});
-
-// function RRWA(val, val2) {
-//     console.log("RRWA");
-
-//     let LastDynamicQuizElement = document.querySelector("#quiz-area-content");
-
-//     let temp = document.createElement("a");
-//     temp.setAttribute("class", "slant");
-
-//     console.log("val " + (val) + "\nval2 " + val2);
-//     console.log("QuizA [val-1] " + QuizContentObjArray[val].answer + "\nval2 " + val2);
-
-//     if (QuizContentObjArray[val].answer === val2 && val2 === "S0") {
-//         temp.textContent = "";
-//         LastDynamicQuizElement.append(temp);
-
-//     } else if (QuizContentObjArray[val].answer === val2) {
-//         temp.textContent = "Correct";
-//         LastDynamicQuizElement.append(temp);
-//         score++;
-//         totAnsrD++;
-
-//     } else if (QuizContentObjArray[val].answer.substring(0, 2) != val2.substring(0, 2) && QuizContentObjArray[val].answer.substring(0, 1) == "q") {
-//         temp.textContent = "Wrong";
-//         LastDynamicQuizElement.append(temp);
-//         score--;
-//         totAnsrD++;
-
-//     } else {
-//         temp.textContent = "";
-//         LastDynamicQuizElement.append(temp);
-//     }
-//     //CAC((val+1), val2);
-// }
-
-
 
 //clears quiz area content
 function ClearQuizContent() {
@@ -430,12 +322,6 @@ function ClearQuizContent() {
     CAC(0, "Start");
 }
 
-// tempStartEL.addEventListener("click", function (event) {
-//     // loadquiz();
-//     CAC(0);
-
-// });
-
 function Autoload() {
     if (firsttime === 0) {
         firsttime++;
@@ -445,27 +331,19 @@ function Autoload() {
     }
 }
 
-function renderTime(){
-    timeLeftEL.innerHTML = timeLeft;
-}
+timeLeft = BeginningTime;
 
 function StartTimer() {
     //setTime(); pending
 
-    timeLeft = BeginningTime;
-
-   timer = setInterval(function () {
+    timer = setInterval(function () {
         if (timeLeft <= 0) {
             clearInterval(timeLeft = 0);
         }
         timeLeft--;
         renderTime();
-        
     }, 1000)
-
 };
-
-
 
 quizAreaEL.addEventListener("click", function (event) {
     event.preventDefault();
@@ -474,34 +352,22 @@ quizAreaEL.addEventListener("click", function (event) {
     let done = false;
     console.log("Target " + buttClickD + " \n" + "Value " + temp);
     if (buttClickD.matches("button") === true) {
-
         if (event.target.value.substring(0, 2) == "S0") {//switch from start to q1
             StartTimer();
             CAC(1, temp);
-
-
         } else if (event.target.value.substring(0, 2) == "q1") {//switch from q1 to q2
-            //RRWA(1, temp);
             CAC(2, temp);
-
         } else if (event.target.value.substring(0, 2) == "q2") {//switch from q2 to q3
-            //RRWA(2, temp);
             CAC(3, temp);
-
         } else if (event.target.value.substring(0, 2) == "q3") {//switch from q3 to q4
-            //RRWA(3, temp);
             CAC(4, temp);
-
         } else if (event.target.value.substring(0, 2) == "q4") {//switch from q4 to q5
-            // RRWA(4, temp);
             CAC(5, temp);
-
         } else if (event.target.value.substring(0, 2) == "q5") {//switch from q5 to all done F6 form to enter name display score
             clearInterval(timer);
             timescore = timeLeft;
             CAC(6, temp);
         } else if (event.target.value.substring(0, 2) == "F6") {//switch from F6 all done to F7 high scores
-
 
             var UserIntForm = document.querySelector("#User-Initials");
             var UserIntText = UserIntForm.value.trim();
@@ -509,26 +375,19 @@ quizAreaEL.addEventListener("click", function (event) {
             if (UserIntText === "") {
                 return;
             }
-
             // Add new Text to todos array, clear the input
             AllTimeHighScores.push(UserIntText + " Time Score: " + timescore + " Question Score: " + score + " / " + totAnsrD + "  ");
-
-            //alert("submit was pressed.");
-
-            CAC(7);
+            CAC(7, temp);
             //Render High Score.
-
         } else if (event.target.value.substring(0, 2) == "F7") {//Do nothing way for different click high scores
             //CAC(0);
             alert("submit was pressed.");
         } else if (event.target.value == "reset") {//switch from F6 to F7 high scores
             ClearQuizContent();
         } else if (event.target.value == "submit") {
-
         }
     }
 });
-
 
 resetButtEL.addEventListener("click", function (event) {
     let buttClickD = event.target;
