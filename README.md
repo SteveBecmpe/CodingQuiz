@@ -5,6 +5,10 @@ Project name is a quiz that allows the user to take a time sensative test that a
 This HW was challenging
 Additional line of information text about what the project does. Your introduction should be around 2 or 3 sentences. Don't go overboard, people won't read it.
 
+# Coding Quiz Links:
+https://stevebecmpe.github.io/CodingQuiz/
+https://github.com/SteveBecmpe/CodingQuiz
+
 ## Prerequisites See below.
 
 The images thing that was share last time was not very help full.
