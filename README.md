@@ -7,9 +7,10 @@ Additional line of information text about what the project does. Your introducti
 
 # Coding Quiz Links:
 https://stevebecmpe.github.io/CodingQuiz/
-https://github.com/SteveBecmpe/CodingQuiz
 
-## Prerequisites See below.
+https://github.com/SteveBecmpe/CodingQuiz/
+
+## Image links:
 
 See images below.
 Please refer to the images folder.
@@ -18,6 +19,17 @@ see links here
 ![Original version](/images/1-commit-structure_underportfolio.jpg)
 
 ![current start page](/images/FinalStart.jpg)
+
+## Bugs that need to be fixed:
+-[X] switching from highscore button to try again blanks out the page.. Issue in timer reset. variable not defined was causing the render function to not work.
+-[] readme file quiz links show on one line in github.. on two seperate lines in Readme file..
+-[] remove links on highscore do not work. should be 1 button to reset/remove all.
+-[] Timer stops at -1 and should run out until the quiz is completed.
+-[X] adjust title tag to not be document. Changed to "Coding Quiz, by Steve Black"
+
+
+
+## Prerequisites See below.
 
 # 04 Web APIs: Code Quiz
 

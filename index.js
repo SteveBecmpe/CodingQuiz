@@ -314,7 +314,7 @@ function ClearAnswerContent() {
 //clears quiz area content
 function ClearQuizContent() {
     quizAreaEL.innerHTML = "";
-    clearInterval(timer);
+    clearInterval(timeInterval);
     timeLeft = BeginningTime;
     renderTime();
     score = 0; //default value for score. used to keep track of correct answers.
@@ -331,11 +331,11 @@ function Autoload() {
     }
 }
 
-timeLeft = BeginningTime;
+//timeLeft = BeginningTime;//moved inside start timer functtion
 
 function StartTimer() {
     //setTime(); pending
-
+    timeLeft = BeginningTime;
     timer = setInterval(function () {
         if (timeLeft <= 0) {
             clearInterval(timeLeft = 0);
