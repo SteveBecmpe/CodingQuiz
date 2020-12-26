@@ -90,7 +90,7 @@ let QuizContentObjArray = [
         "butt1": "1. JavaScript",
         "butt2": "2. terminal / bash",
         "butt3": "3. for loops",
-        "butt4": "4. console.log",
+        // "butt4": "4. console.log",
         "butt1Val": "q5a1",
         "butt2Val": "q5a2",
         "butt3Val": "q5a3",
@@ -149,14 +149,14 @@ function renderTime() {
 
 //create and append Content
 function CAC(val, val2) {//val is the index in the quizcontentobject array to be rendered.
-    console.log("inside CAC");
-    console.log(QuizContentObjArray[val].name.substring(0, 1));
+    // console.log("inside CAC");
+    // console.log(QuizContentObjArray[val].name.substring(0, 1));
 
     quizAreaEL.innerHTML = "";
 
     if ((QuizContentObjArray[val].name.substring(0, 1)) == "S") {
         // render Start quiz section
-        console.log("S render loop ---------------------------------------------------");
+        // console.log("S render loop ---------------------------------------------------");
 
         let tempStHeader = document.createElement("h2");
         tempStHeader.textContent = QuizContentObjArray[val].headerC;
@@ -173,7 +173,7 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
         quizAreaEL.appendChild(button);
 
     } else if ((QuizContentObjArray[val].name.substring(0, 1)) == "Q") { // if it is a question render this way
-        console.log("Q render loop --------------------------------------------------");
+        // console.log("Q render loop --------------------------------------------------");
 
         let tempQnum = document.createElement("h3");
         tempQnum.textContent = QuizContentObjArray[val].name;
@@ -222,8 +222,8 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
 
         //append right wrong
         let temptext = "default";//-------------turned into function below
-        console.log("val " + (val - 1) + "\nval2 " + val2);
-        console.log("QuizA [val-1] " + QuizContentObjArray[val - 1].answer + "\nval2 " + val2);
+        // console.log("val " + (val - 1) + "\nval2 " + val2);
+        // console.log("QuizA [val-1] " + QuizContentObjArray[val - 1].answer + "\nval2 " + val2);
         if (QuizContentObjArray[val - 1].answer === val2 && val2 === "S0") {
             temptext = "";
         } else if (QuizContentObjArray[val - 1].answer === val2) {
@@ -235,7 +235,7 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
             clearInterval(timeLeft);//------------------------------------------------was timer
             timeLeft = timeLeft - timePen;
             renderTime();   // StartTimer();//should this be render time?
-            console.log("RENDER TIME AFTER WRONG");
+            // console.log("RENDER TIME AFTER WRONG");
             temptext = "Wrong";
             totAnsrD++;
             setTimeout(ClearAnswerContent, 1000);//SET TIME OUT- for answer stuff
@@ -243,7 +243,7 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
         }
         temp.textContent = temptext;
     } else if ((QuizContentObjArray[val].name.substring(0, 2)) == "F6") { // if all done
-        console.log("Inside F else If in CAC --------------------------------------------------");
+        // console.log("Inside F else If in CAC --------------------------------------------------");
 
         let tempheader = document.createElement("h2"); //create header for content to be loaded from quizcontentobjarray
         tempheader.textContent = QuizContentObjArray[val].headerC;
@@ -304,7 +304,7 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
             HStempST.appendChild(li);
         }
     }
-    console.log("End CAC");
+    // console.log("End CAC");
 }
 
 
@@ -357,7 +357,7 @@ quizAreaEL.addEventListener("click", function (event) {
     let buttClickD = event.target;//get specific button that caused the click
     let temp = event.target.value;
     let done = false;
-    console.log("Target " + buttClickD + " \n" + "Value " + temp);
+    // console.log("Target " + buttClickD + " \n" + "Value " + temp);
     if (buttClickD.matches("button") === true) {
         if (event.target.value.substring(0, 2) == "S0") {//switch from start to q1
             StartTimer();
@@ -401,7 +401,7 @@ HighScoreEL.addEventListener("click", function (event) {//----------------------
     clearInterval(timer);
     let buttClickD = event.target;
     if (buttClickD.matches("button") === true) {
-        console.log(buttClickD.value);
+        // console.log(buttClickD.value);
 
         //ClearQuizContent();
         firsttime = 0;
@@ -416,7 +416,7 @@ resetButtEL.addEventListener("click", function (event) {
     clearInterval(timer);
     let buttClickD = event.target;
     if (buttClickD.matches("button") === true) {
-        console.log(buttClickD.value);
+        // console.log(buttClickD.value);
 
         //ClearQuizContent();
         firsttime = 0;
