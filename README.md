@@ -11,13 +11,13 @@ https://github.com/SteveBecmpe/CodingQuiz
 
 ## Prerequisites See below.
 
-The images thing that was share last time was not very help full.
+See images below.
 Please refer to the images folder.
 see links here
 
-![](/images/1-commit-structure_underportfolio.jpg)
+![Original version](/images/1-commit-structure_underportfolio.jpg)
 
-![](/images/FinalStart.jpg)
+![current start page](/images/FinalStart.jpg)
 
 # 04 Web APIs: Code Quiz
 
