@@ -6,7 +6,7 @@ let timePen = 10;// time penalty
 let score = 0; //default value for score. used to keep track of correct answers.
 let totAnsrD = 0;//keeps track of questions answered.
 let timeLeftEL = document.querySelector("#time-left");
-let resetButtEL = document.querySelector("#topmidreset");
+let resetButtEL = document.querySelector("#topmidreset");//RESET BUTTON
 let quizAreaEL = document.querySelector("#quiz-area-content");
 let HighScoreEL = document.querySelector("#High-Score");
 let curQuizPosition = 0;//keeps track of the current position of the array
@@ -14,8 +14,8 @@ let button = document.createElement("button");
 let answerRwEL = document.querySelector("#quiz-rw-content");
 let firsttime = 0;
 let AllTimeHighScores = [];
-let timeInterval;
-let timeLeft;
+let timeInterval=0;
+let timeLeft=0;
 
 let QuizContentObjArray = [
     {
@@ -137,8 +137,15 @@ function storeHighScores() {
 }
 
 function renderTime() {
-    timeLeftEL.innerHTML = timeLeft;
+    if(timeLeftEL.innerHTML<=-50){
+        timeLeftEL.innerHTML = -50;
+        clearInterval(timeLeft);
+    } else {
+        timeLeftEL.innerHTML = timeLeft;
+    }
+    
 }
+
 
 //create and append Content
 function CAC(val, val2) {//val is the index in the quizcontentobject array to be rendered.
@@ -225,9 +232,9 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
             totAnsrD++;
             setTimeout(ClearAnswerContent, 1000);//SET TIME OUT- for answer stuff
         } else if (QuizContentObjArray[val - 1].answer != val2) {
-            clearInterval(timer);
+            clearInterval(timeLeft);//------------------------------------------------was timer
             timeLeft = timeLeft - timePen;
-            StartTimer();
+            renderTime();   // StartTimer();//should this be render time?
             console.log("RENDER TIME AFTER WRONG");
             temptext = "Wrong";
             totAnsrD++;
@@ -300,10 +307,7 @@ function CAC(val, val2) {//val is the index in the quizcontentobject array to be
     console.log("End CAC");
 }
 
-HighScoreEL.addEventListener("click", function (event) {//-----------------------------------------------------
-    let val = event.target;
-    CAC(7, val);
-})
+
 
 
 function ClearAnswerContent() {
@@ -314,7 +318,7 @@ function ClearAnswerContent() {
 //clears quiz area content
 function ClearQuizContent() {
     quizAreaEL.innerHTML = "";
-    clearInterval(timeInterval);
+    clearInterval(timer);
     timeLeft = BeginningTime;
     renderTime();
     score = 0; //default value for score. used to keep track of correct answers.
@@ -327,6 +331,9 @@ function Autoload() {
         firsttime++;
         score = 0; //default value for score. used to keep track of correct answers.
         totAnsrD = 0;//keeps track of questions answered.
+        clearInterval(timeLeft=0);//------------------------just added
+        timeLeft = BeginningTime;
+        renderTime();//------------------------just added
         CAC(0, "Start");
     }
 }
@@ -337,7 +344,7 @@ function StartTimer() {
     //setTime(); pending
     timeLeft = BeginningTime;
     timer = setInterval(function () {
-        if (timeLeft <= 0) {
+        if (timeLeft <= -50) {// change to -50, ie -10 for each question...
             clearInterval(timeLeft = 0);
         }
         timeLeft--;
@@ -389,11 +396,31 @@ quizAreaEL.addEventListener("click", function (event) {
     }
 });
 
-resetButtEL.addEventListener("click", function (event) {
+HighScoreEL.addEventListener("click", function (event) {//-----------------------------------------------------
+
+    clearInterval(timer);
     let buttClickD = event.target;
     if (buttClickD.matches("button") === true) {
         console.log(buttClickD.value);
-        ClearQuizContent();
+
+        //ClearQuizContent();
+        firsttime = 0;
+        Autoload();
+    }
+    let val = event.target;
+  
+    CAC(7, val);
+})
+
+resetButtEL.addEventListener("click", function (event) {
+    clearInterval(timer);
+    let buttClickD = event.target;
+    if (buttClickD.matches("button") === true) {
+        console.log(buttClickD.value);
+
+        //ClearQuizContent();
+        firsttime = 0;
+        Autoload();
     }
 });
 

@@ -22,10 +22,11 @@ see links here
 
 ## Bugs that need to be fixed:
 -[X] switching from highscore button to try again blanks out the page.. Issue in timer reset. variable not defined was causing the render function to not work.
--[] readme file quiz links show on one line in github.. on two seperate lines in Readme file..
+-[X] readme file quiz links show on one line in github.. on two seperate lines in Readme file..
 -[] remove links on highscore do not work. should be 1 button to reset/remove all.
--[] Timer stops at -1 and should run out until the quiz is completed.
+-[X] Timer stops at -1 and should run out until the quiz is completed. runs to -50
 -[X] adjust title tag to not be document. Changed to "Coding Quiz, by Steve Black"
+-[] remove all console.logs from code and verify it still functions.
 
 
 
